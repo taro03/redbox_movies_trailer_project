@@ -24,5 +24,7 @@ It will be updated with more movies and features
 Thank you instructor @Udacity for providing the front-end code for the website
 <h3>License</h3>>
 *Dustin Doan*
+
 *email: dustin.ddoan@gmail.com*
+
 *tel: 714-362-7391*
