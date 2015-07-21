@@ -22,7 +22,7 @@ The project is still in pre-alpha.
 It will be updated with more movies and features
 <h3>Credits</h3>
 Thank you instructor @Udacity for providing the front-end code for the website
-<h3>License</h3>>
+<h3>License</h3>
 *Dustin Doan*
 
 *email: dustin.ddoan@gmail.com*
