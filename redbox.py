@@ -32,11 +32,14 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
-        .movie-tile {
+        .movie-title {
             margin-bottom: 20px;
             padding-top: 20px;
         }
-        
+        .movie-stars {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
         .movie-tile:hover {
             background-color: #EEE;
             cursor: pointer;
@@ -57,7 +60,7 @@ main_page_head = '''
     </style>
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
-        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event){
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
             $("#trailer-video-container").empty();
@@ -65,7 +68,8 @@ main_page_head = '''
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
-            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId +
+                '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
@@ -115,15 +119,19 @@ main_page_content = '''
       {movie_tiles}
     </div>
     
+    
   </body>
 </html>
 '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" 
+    data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal"
+    data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h2>{movie_title}</h2>
+    <h4>{movie_stars}</h4>
 </div>
 '''
 
@@ -139,6 +147,7 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
+            movie_stars=movie.stars,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id
         )
@@ -149,7 +158,9 @@ def open_movies_page(movies):
   output_file = open('redbox.html', 'w')
 
   # Replace the placeholder for the movie tiles with the actual dynamically generated content
-  rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
+  rendered_content = main_page_content.format(
+      movie_tiles=create_movie_tiles_content(movies)
+      )
 
   # Output the file
   output_file.write(main_page_head + rendered_content)
